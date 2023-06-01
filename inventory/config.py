@@ -8,4 +8,4 @@ class Config(BaseSettings):
         env_file = ".env"
 
 
-config = Config() # type: ignore
+config = Config()  # type: ignore

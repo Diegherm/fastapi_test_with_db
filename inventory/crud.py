@@ -1,7 +1,8 @@
-from sqlalchemy import select, update
+from sqlalchemy import select
 from sqlalchemy.orm import Session
+
 from inventory.models import User
-from inventory.schemas import UserCreateSchema, LoginSchema, UserUpdateSchema
+from inventory.schemas import LoginSchema, UserCreateSchema, UserUpdateSchema
 
 
 def insert_user(user_data: UserCreateSchema, session: Session) -> User:
@@ -12,13 +13,16 @@ def insert_user(user_data: UserCreateSchema, session: Session) -> User:
 
     return user
 
+
 def select_users(session: Session):
     smt = select(User)
     return session.execute(smt).scalars().all()
 
+
 def select_user(user_id: int, session: Session) -> User:
-    smt = select(User).where(User.id == user_id) 
+    smt = select(User).where(User.id == user_id)
     return session.execute(smt).scalar_one()
+
 
 def update_user(user_id: int, user_data: UserUpdateSchema, session: Session) -> User:
     smt_user = select(User).where(User.id == user_id)
@@ -30,6 +34,7 @@ def update_user(user_id: int, user_data: UserUpdateSchema, session: Session) -> 
     session.commit()
 
     return user
+
 
 def check_password(login: LoginSchema, session: Session) -> bool:
     smt_user = select(User).where(User.name == login.user)

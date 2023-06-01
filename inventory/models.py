@@ -1,9 +1,12 @@
 from datetime import datetime
-from sqlalchemy import String, ForeignKey
+
+from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+
 
 class Base(DeclarativeBase):
     pass
+
 
 class User(Base):
     __tablename__ = "users"
@@ -14,7 +17,7 @@ class User(Base):
     password: Mapped[str] = mapped_column(nullable=True)
 
     stock_changes: Mapped[list["StockChange"]] = relationship(back_populates="user")
-    
+
 
 class Item(Base):
     __tablename__ = "items"
@@ -25,7 +28,7 @@ class Item(Base):
     stock: Mapped[int] = mapped_column(default=0, server_default="0")
 
     stock_changes: Mapped[list["StockChange"]] = relationship(back_populates="item")
-    
+
 
 class StockChange(Base):
     __tablename__ = "stock_changes"

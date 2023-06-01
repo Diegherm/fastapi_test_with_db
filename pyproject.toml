@@ -17,7 +17,23 @@ dependencies = [
 requires-python = ">=3.11"
 license = {text = "MIT"}
 
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.3.0",
+    "ruff>=0.0.270",
+]
+
 [tool.pdm.scripts]
 _.env_file = ".env"
 alembic = "alembic {args}"
 start = "uvicorn main:app --reload"
+_black = "black ."
+_ruff = "ruff . --fix"
+format = {"composite" = ["_black", "_ruff"]}
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
+[tool.ruff]
+select = ["E", "F", "I", "N"]

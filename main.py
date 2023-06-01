@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from inventory.routes import router
 
 app = FastAPI()
