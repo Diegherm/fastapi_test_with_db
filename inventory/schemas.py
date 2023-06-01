@@ -21,7 +21,7 @@ class UserReadSchema(UserBaseSchema):
 
 class UserUpdateSchema(BaseModel):
     name: str | None
-    is_enabled: str | None
+    is_enabled: bool | None
     password: str | None
 
 
