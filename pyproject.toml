@@ -1,0 +1,23 @@
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Diego Alvarez S.", email = "dialvarezs@gmail.com"},
+]
+dependencies = [
+    "fastapi>=0.95.2",
+    "uvicorn[standard]>=0.22.0",
+    "sqlalchemy>=2.0.15",
+    "alembic>=1.11.1",
+    "psycopg>=3.1.9",
+    "pydantic[dotenv]>=1.10.8",
+]
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.pdm.scripts]
+_.env_file = ".env"
+alembic = "alembic {args}"
+start = "uvicorn main:app --reload"
