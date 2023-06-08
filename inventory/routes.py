@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 
 from inventory.crud import (
     check_password,
+    insert_item,
     insert_user,
+    select_item,
+    select_items,
+    select_stock_changes,
     select_user,
     select_users,
     update_user,
@@ -12,7 +16,9 @@ from inventory.crud import (
 from inventory.database import get_db
 from inventory.models import User
 from inventory.schemas import (
+    ItemCreateSchema,
     LoginSchema,
+    StockChangeCreateBaseSchema,
     UserCreateSchema,
     UserReadSchema,
     UserUpdateSchema,
@@ -23,9 +29,9 @@ router = APIRouter()
 
 @router.post("/users/", response_model=UserReadSchema)
 async def create_user(
-    user: UserCreateSchema, session: Session = Depends(get_db)
+    user_data: UserCreateSchema, session: Session = Depends(get_db)
 ) -> User:
-    return insert_user(user, session)
+    return insert_user(user_data, session)
 
 
 @router.get("/users/", response_model=list[UserReadSchema])
@@ -54,3 +60,32 @@ async def login(login: LoginSchema, session: Session = Depends(get_db)):
         return {"detail": "Contraseña correcta"}
     else:
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
+
+
+@router.post("/items")
+async def create_item(item_data: ItemCreateSchema, session: Session = Depends(get_db)):
+    return insert_item(item_data, session)
+
+
+@router.get("/items")
+async def read_items(session: Session = Depends(get_db)):
+    return select_items(session)
+
+
+@router.get("/items/{item_id}")
+async def read_item(item_id: int, session: Session = Depends(get_db)):
+    return select_item(item_id, session)
+
+
+@router.post("/items/{item_id}/stock-change")
+async def insert_stock_change(
+    item_id: int,
+    stock_change: StockChangeCreateBaseSchema,
+    session: Session = Depends(get_db),
+):
+    return insert_stock_change(item_id, stock_change, session)
+
+
+@router.get("/stock-changes")
+async def read_stock_changes(session: Session = Depends(get_db)):
+    return select_stock_changes(session)

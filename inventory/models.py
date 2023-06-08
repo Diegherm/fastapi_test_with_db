@@ -36,7 +36,7 @@ class StockChange(Base):
     item_id: Mapped[int] = mapped_column(ForeignKey("items.id"), primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), primary_key=True)
     timestamp: Mapped[datetime] = mapped_column(default=datetime.now)
-    change: Mapped[int]
+    quantity: Mapped[int]
 
     item: Mapped["Item"] = relationship(back_populates="stock_changes")
     user: Mapped["User"] = relationship(back_populates="stock_changes")

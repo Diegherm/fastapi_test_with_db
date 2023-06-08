@@ -18,6 +18,7 @@ version = "3.7.0"
 requires_python = ">=3.7"
 summary = "High level compatibility layer for multiple asynchronous event loop implementations"
 dependencies = [
+    "exceptiongroup; python_version < \"3.11\"",
     "idna>=2.8",
     "sniffio>=1.1",
 ]
@@ -33,6 +34,7 @@ dependencies = [
     "packaging>=22.0",
     "pathspec>=0.9.0",
     "platformdirs>=2",
+    "tomli>=1.1.0; python_version < \"3.11\"",
 ]
 
 [[package]]
@@ -49,6 +51,12 @@ name = "colorama"
 version = "0.4.6"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 summary = "Cross-platform colored terminal text."
+
+[[package]]
+name = "exceptiongroup"
+version = "1.1.1"
+requires_python = ">=3.7"
+summary = "Backport of PEP 654 (exception groups)"
 
 [[package]]
 name = "fastapi"
@@ -197,6 +205,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "tomli"
+version = "2.0.1"
+requires_python = ">=3.7"
+summary = "A lil' TOML parser"
+
+[[package]]
 name = "typing-extensions"
 version = "4.6.2"
 requires_python = ">=3.7"
@@ -260,7 +274,7 @@ summary = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
 lock_version = "4.2"
 cross_platform = true
 groups = ["default", "dev"]
-content_hash = "sha256:0ef04c7795e43c4cfa559573b0741d8c64adbaf9f3491380fa7ef96d156943cd"
+content_hash = "sha256:44927d5d9651005471afc7404713306406dec9b49f13d278f8cebb3fd89ede89"
 
 [metadata.files]
 "alembic 1.11.1" = [
@@ -305,6 +319,10 @@ content_hash = "sha256:0ef04c7795e43c4cfa559573b0741d8c64adbaf9f3491380fa7ef96d1
 "colorama 0.4.6" = [
     {url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
+]
+"exceptiongroup 1.1.1" = [
+    {url = "https://files.pythonhosted.org/packages/61/97/17ed81b7a8d24d8f69b62c0db37abbd8c0042d4b3fc429c73dab986e7483/exceptiongroup-1.1.1-py3-none-any.whl", hash = "sha256:232c37c63e4f682982c8b6459f33a8981039e5fb8756b2074364e5055c498c9e"},
+    {url = "https://files.pythonhosted.org/packages/cc/38/57f14ddc8e8baeddd8993a36fe57ce7b4ba174c35048b9a6d270bb01e833/exceptiongroup-1.1.1.tar.gz", hash = "sha256:d484c3090ba2889ae2928419117447a14daf3c1231d5e30d0aae34f354f01785"},
 ]
 "fastapi 0.95.2" = [
     {url = "https://files.pythonhosted.org/packages/4e/1a/04887c641b67e6649bde845b9a631f73a7abfbe3afda83957e09b95d88eb/fastapi-0.95.2-py3-none-any.whl", hash = "sha256:d374dbc4ef2ad9b803899bd3360d34c534adc574546e25314ab72c0c4411749f"},
@@ -652,6 +670,10 @@ content_hash = "sha256:0ef04c7795e43c4cfa559573b0741d8c64adbaf9f3491380fa7ef96d1
 "starlette 0.27.0" = [
     {url = "https://files.pythonhosted.org/packages/06/68/559bed5484e746f1ab2ebbe22312f2c25ec62e4b534916d41a8c21147bf8/starlette-0.27.0.tar.gz", hash = "sha256:6a6b0d042acb8d469a01eba54e9cda6cbd24ac602c4cd016723117d6a7e73b75"},
     {url = "https://files.pythonhosted.org/packages/58/f8/e2cca22387965584a409795913b774235752be4176d276714e15e1a58884/starlette-0.27.0-py3-none-any.whl", hash = "sha256:918416370e846586541235ccd38a474c08b80443ed31c578a418e2209b3eef91"},
+]
+"tomli 2.0.1" = [
+    {url = "https://files.pythonhosted.org/packages/97/75/10a9ebee3fd790d20926a90a2547f0bf78f371b2f13aa822c759680ca7b9/tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
+    {url = "https://files.pythonhosted.org/packages/c0/3f/d7af728f075fb08564c5949a9c95e44352e23dee646869fa104a3b2060a3/tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 "typing-extensions 4.6.2" = [
     {url = "https://files.pythonhosted.org/packages/38/60/300ad6f93adca578bf05d5f6cd1d854b7d140bebe2f9829561aa9977d9f3/typing_extensions-4.6.2-py3-none-any.whl", hash = "sha256:3a8b36f13dd5fdc5d1b16fe317f5668545de77fa0b8e02006381fd49d731ab98"},
