@@ -1,15 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from inventory.models import Item, StockChange, User
-from inventory.schemas import (
-    ItemCreateSchema,
-    ItemUpdateSchema,
-    LoginSchema,
-    StockChangeCreateBaseSchema,
-    UserCreateSchema,
-    UserUpdateSchema,
-)
+from inventory.models import User
+from inventory.schemas import LoginSchema, UserCreateSchema, UserUpdateSchema
 
 
 def insert_user(user_data: UserCreateSchema, session: Session) -> User:
@@ -48,57 +41,3 @@ def check_password(login: LoginSchema, session: Session) -> bool:
     user = session.execute(smt_user).scalar_one()
 
     return user.password == login.password
-
-
-def insert_item(item_data: ItemCreateSchema, session: Session) -> Item:
-    item = Item(**item_data.dict())
-    session.add(item)
-    session.commit()
-    session.refresh(item)
-
-    return item
-
-
-def select_items(session: Session):
-    smt = select(Item)
-    return session.execute(smt).scalars().all()
-
-
-def select_item(item_id: int, session: Session) -> Item:
-    smt = select(Item).where(Item.id == item_id)
-    return session.execute(smt).scalar_one()
-
-
-def update_item(item_id: int, item_data: ItemUpdateSchema, session: Session) -> Item:
-    smt_item = select(Item).where(Item.id == item_id)
-    item = session.execute(smt_item).scalar_one()
-    for k, v in item_data.dict(exclude_unset=True).items():
-        setattr(item, k, v)
-
-    session.add(item)
-    session.commit()
-
-    return item
-
-
-def insert_stock_change(
-    item_id: int, stock_change: StockChangeCreateBaseSchema, session: Session
-) -> StockChange:
-    stock_change = StockChange(item_id=item_id, **stock_change.dict())
-    session.add(stock_change)
-
-    # update item stock
-    item = select_item(stock_change.item_id, session)
-    item.stock += stock_change.quantity
-    session.add(item)
-
-    # commit and refresh
-    session.commit()
-    session.refresh(stock_change)
-
-    return stock_change
-
-
-def select_stock_changes(session: Session):
-    smt = select(StockChange)
-    return session.execute(smt).scalars().all()

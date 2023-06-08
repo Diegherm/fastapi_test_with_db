@@ -25,46 +25,24 @@ class UserUpdateSchema(BaseModel):
     password: str | None
 
 
-class ItemBaseSchema(BaseModel):
+class ItemSchema(BaseModel):
+    id: int
     name: str
     description: str
-
-    class Config:
-        orm_mode = True
-
-
-class ItemCreateSchema(ItemBaseSchema):
-    pass
-
-
-class ItemReadSchema(ItemBaseSchema):
-    id: int
     stock: int
 
-
-class ItemUpdateSchema(BaseModel):
-    name: str | None
-    description: str | None
-    stock: int | None
-
-
-class StockChangeBaseSchema(BaseModel):
-    item_id: int
-    timestamp: datetime
-    quantity: int
-
     class Config:
         orm_mode = True
 
 
-class StockChangeCreateBaseSchema(StockChangeBaseSchema):
-    pass
-
-
-class StockChangeReadBaseSchema(StockChangeBaseSchema):
+class StockChangeSchema(BaseModel):
+    item_id: int
     user_id: int
+    timestamp: datetime
+    change: int
 
-    item: ItemReadSchema
+    class Config:
+        orm_mode = True
 
 
 class LoginSchema(BaseModel):
