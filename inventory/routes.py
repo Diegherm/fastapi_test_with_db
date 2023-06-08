@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from inventory.crud import (
     check_password,
     insert_item,
+    insert_stock_change,
     insert_user,
     select_item,
     select_items,
@@ -17,8 +18,10 @@ from inventory.database import get_db
 from inventory.models import User
 from inventory.schemas import (
     ItemCreateSchema,
+    ItemReadSchema,
     LoginSchema,
-    StockChangeCreateBaseSchema,
+    StockChangeCreateSchema,
+    StockChangeReadSchema,
     UserCreateSchema,
     UserReadSchema,
     UserUpdateSchema,
@@ -62,30 +65,30 @@ async def login(login: LoginSchema, session: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
 
 
-@router.post("/items")
+@router.post("/items", response_model=ItemReadSchema)
 async def create_item(item_data: ItemCreateSchema, session: Session = Depends(get_db)):
     return insert_item(item_data, session)
 
 
-@router.get("/items")
+@router.get("/items", response_model=list[ItemReadSchema])
 async def read_items(session: Session = Depends(get_db)):
     return select_items(session)
 
 
-@router.get("/items/{item_id}")
+@router.get("/items/{item_id}", response_model=ItemReadSchema)
 async def read_item(item_id: int, session: Session = Depends(get_db)):
     return select_item(item_id, session)
 
 
-@router.post("/items/{item_id}/stock-change")
-async def insert_stock_change(
+@router.post("/items/{item_id}/stock-change", response_model=StockChangeReadSchema)
+async def create_stock_change(
     item_id: int,
-    stock_change: StockChangeCreateBaseSchema,
+    stock_change: StockChangeCreateSchema,
     session: Session = Depends(get_db),
 ):
     return insert_stock_change(item_id, stock_change, session)
 
 
-@router.get("/stock-changes")
+@router.get("/stock-changes", response_model=list[StockChangeReadSchema])
 async def read_stock_changes(session: Session = Depends(get_db)):
     return select_stock_changes(session)

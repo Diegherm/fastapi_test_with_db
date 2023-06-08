@@ -6,7 +6,7 @@ from inventory.schemas import (
     ItemCreateSchema,
     ItemUpdateSchema,
     LoginSchema,
-    StockChangeCreateBaseSchema,
+    StockChangeCreateSchema,
     UserCreateSchema,
     UserUpdateSchema,
 )
@@ -82,7 +82,7 @@ def update_item(item_id: int, item_data: ItemUpdateSchema, session: Session) -> 
 
 
 def insert_stock_change(
-    item_id: int, stock_change: StockChangeCreateBaseSchema, session: Session
+    item_id: int, stock_change: StockChangeCreateSchema, session: Session
 ) -> StockChange:
     stock_change = StockChange(item_id=item_id, **stock_change.dict())
     session.add(stock_change)
@@ -95,6 +95,8 @@ def insert_stock_change(
     # commit and refresh
     session.commit()
     session.refresh(stock_change)
+
+    print(stock_change)
 
     return stock_change
 

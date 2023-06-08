@@ -41,6 +41,13 @@ class ItemReadSchema(ItemBaseSchema):
     id: int
     stock: int
 
+    stock_changes: list["StockChangePlainReadSchema"]
+
+
+class ItemPlainReadSchema(ItemBaseSchema):
+    id: int
+    stock: int
+
 
 class ItemUpdateSchema(BaseModel):
     name: str | None
@@ -49,24 +56,33 @@ class ItemUpdateSchema(BaseModel):
 
 
 class StockChangeBaseSchema(BaseModel):
-    item_id: int
-    timestamp: datetime
+    user_id: int
     quantity: int
 
     class Config:
         orm_mode = True
 
 
-class StockChangeCreateBaseSchema(StockChangeBaseSchema):
+class StockChangeCreateSchema(StockChangeBaseSchema):
     pass
 
 
-class StockChangeReadBaseSchema(StockChangeBaseSchema):
-    user_id: int
+class StockChangeReadSchema(StockChangeBaseSchema):
+    item_id: int
+    timestamp: datetime
 
-    item: ItemReadSchema
+    item: ItemPlainReadSchema
+    user: UserReadSchema
+
+
+class StockChangePlainReadSchema(StockChangeBaseSchema):
+    item_id: int
+    timestamp: datetime
 
 
 class LoginSchema(BaseModel):
     user: str
     password: str
+
+
+ItemReadSchema.update_forward_refs()
